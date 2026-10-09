@@ -767,9 +767,19 @@ function connectRoom(action) {
   }
   codeInput.value = code;
   localRoomCode = code;
+  const configuredSocketUrl = $('meta[name="last-light-ws"]')?.content.trim();
+  let socketUrl;
+  if (configuredSocketUrl === "same-origin") {
+    const protocol = location.protocol === "https:" ? "wss:" : "ws:";
+    socketUrl = `${protocol}//${location.host}`;
+  } else if (configuredSocketUrl) {
+    socketUrl = configuredSocketUrl;
+  } else {
+    setLobbyStatus("Online play is not configured on this deployment yet.", "error");
+    return;
+  }
   setLobbyStatus("Connecting to the fight server…");
-  const protocol = location.protocol === "https:" ? "wss:" : "ws:";
-  socket = new WebSocket(`${protocol}//${location.host}`);
+  socket = new WebSocket(socketUrl);
   socket.addEventListener("open", () => socket.send(JSON.stringify({ type: action === "create" ? "create-room" : "join-room", code })));
   socket.addEventListener("message", (event) => onServerMessage(JSON.parse(event.data)));
   socket.addEventListener("close", () => {

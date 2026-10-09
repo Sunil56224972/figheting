@@ -23,8 +23,15 @@ Both players need to reach the same running server. Click **Find a Friend**, cre
 
 The server simulates combat and broadcasts state at 20 updates per second. Keep the server process running for the entire match.
 
+## Deploy to Vercel
+
+Vercel serves the static game build; it does not run `server.js` as the persistent multiplayer server. Deploy this repository with the `Other` framework preset, build command `npm run build`, and output directory `dist` (these settings are also in `vercel.json`).
+
+Local Duel works on Vercel without extra setup. To enable online rooms, run `npm start` on a publicly reachable Node.js host and set the Vercel environment variable `LAST_LIGHT_WS_URL` to that server's WebSocket URL, such as `wss://your-game-server.example.com`. Redeploy after setting it. The room state currently lives in server memory, so use one persistent game-server instance rather than scaling it across serverless instances.
+
 ## Checks
 
 ```sh
 npm test
+npm run build
 ```
