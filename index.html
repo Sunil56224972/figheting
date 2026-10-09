@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10171a">
+    <meta name="description" content="Last Light is a handcrafted, competitive 2D fighting game.">
+    <title>LAST LIGHT — After Hours Fight Club</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="page-grain" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="wordmark" href="/" aria-label="Last Light home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>LAST<span class="wordmark-light">LIGHT</span></span>
+      </a>
+      <div class="topbar-center"><span class="signal-dot"></span><span id="connection-label">LOCAL BUILD</span><span class="topbar-divider">/</span><span>SEASON 01</span></div>
+      <button class="sound-toggle" id="sound-toggle" type="button" aria-label="Toggle sound">
+        <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span id="sound-label">SOUND ON</span>
+      </button>
+    </header>
+
+    <main class="main-shell">
+      <section class="intro-row">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> AFTER HOURS FIGHT CLUB <span class="eyebrow-index">NO. 001</span></p>
+          <h1>Make it <span>personal.</span></h1>
+        </div>
+        <p class="intro-note">A little light left.<br>One more round?</p>
+      </section>
+
+      <section class="game-frame" aria-label="Last Light fighting game">
+        <div class="frame-topline">
+          <span id="stage-label"><span class="tiny-square"></span> STAGE 01 <b>—</b> THE LAST TRAIN</span>
+          <span class="frame-top-right"><span id="match-label">FREE PLAY</span><span class="recording-dot"></span></span>
+        </div>
+        <div class="viewport" id="viewport">
+          <canvas id="game" width="960" height="540" aria-label="Game arena"></canvas>
+          <div class="hud" id="hud" hidden>
+            <div class="fighter-hud fighter-hud-left">
+              <div class="fighter-name"><span class="player-mark mark-one">01</span><span><b>JUNO</b><small>THE RUNAWAY</small></span></div>
+              <div class="health-track"><div class="health-fill health-one" id="health-one"></div><div class="health-chip" id="chip-one"></div></div>
+              <div class="round-pips" id="pips-one"></div>
+            </div>
+            <div class="fight-center">
+              <div class="round-label" id="round-label">ROUND 01</div>
+              <div class="timer" id="timer">60</div>
+              <div class="round-result" id="round-result"></div>
+            </div>
+            <div class="fighter-hud fighter-hud-right">
+              <div class="fighter-name"><span><b>ROOK</b><small>THE NIGHT SHIFT</small></span><span class="player-mark mark-two">02</span></div>
+              <div class="health-track"><div class="health-fill health-two" id="health-two"></div><div class="health-chip" id="chip-two"></div></div>
+              <div class="round-pips" id="pips-two"></div>
+            </div>
+          </div>
+          <div class="menu-overlay" id="menu-overlay">
+            <div class="menu-copy">
+              <p class="menu-kicker"><span></span> THE CITY NEVER CALLS IT A DRAW</p>
+              <h2>ONE STAGE.<br><em>NO EXCUSES.</em></h2>
+              <p class="menu-description">Two fighters. Three rounds. Settle it before the first train.</p>
+              <div class="menu-actions">
+                <button class="action-button action-primary" id="local-button" type="button"><span>LOCAL DUEL</span><span class="button-arrow">↗</span></button>
+                <button class="action-button action-secondary" id="online-button" type="button"><span>FIND A FRIEND</span><span class="button-arrow">↗</span></button>
+              </div>
+              <p class="menu-footnote"><span class="keycap">A</span><span class="keycap">D</span> MOVE <span class="menu-footnote-space"></span><span class="keycap">F</span> LIGHT <span class="keycap">G</span> HEAVY</p>
+            </div>
+            <div class="menu-stamp" aria-hidden="true"><span>PLAY<br>IT<br>LOUD</span><i>↗</i></div>
+          </div>
+          <div class="lobby-overlay" id="lobby-overlay" hidden>
+            <div class="lobby-card">
+              <button class="close-lobby" id="close-lobby" type="button" aria-label="Back">×</button>
+              <p class="eyebrow"><span class="eyebrow-line"></span> TWO PLAYER NETWORK</p>
+              <h2>Bring your<br><em>rival.</em></h2>
+              <p class="lobby-copy">Create a private room and send your friend the code. No accounts, no waiting room.</p>
+              <div class="room-code-wrap"><label for="room-code">ROOM CODE</label><input id="room-code" type="text" maxlength="6" placeholder="NIGHT7" autocomplete="off" spellcheck="false"></div>
+              <div class="lobby-actions"><button class="action-button action-primary" id="create-room" type="button"><span>CREATE ROOM</span><span class="button-arrow">↗</span></button><button class="action-button action-secondary" id="join-room" type="button"><span>JOIN ROOM</span><span class="button-arrow">↗</span></button></div>
+              <p class="lobby-status" id="lobby-status">Room codes are private. First player is P1.</p>
+            </div>
+          </div>
+          <div class="end-overlay" id="end-overlay" hidden>
+            <p class="menu-kicker"><span></span> THE NIGHT BELONGS TO</p>
+            <h2 id="winner-title">JUNO TAKES IT.</h2>
+            <p id="winner-subtitle">Good hands. Run it back?</p>
+            <div class="end-actions"><button class="action-button action-primary" id="rematch-button" type="button"><span>RUN IT BACK</span><span class="button-arrow">↗</span></button><button class="action-button action-secondary" id="menu-button" type="button"><span>BACK TO MENU</span><span class="button-arrow">↗</span></button></div>
+          </div>
+          <div class="touch-controls" id="touch-controls" hidden>
+            <div class="touch-movement"><button data-touch="left" aria-label="Move left">←</button><button data-touch="right" aria-label="Move right">→</button><button data-touch="jump" aria-label="Jump">↑</button></div>
+            <div class="touch-attacks"><button class="touch-light" data-touch="light">LIGHT</button><button class="touch-heavy" data-touch="heavy">HEAVY</button><button data-touch="guard">GUARD</button></div>
+          </div>
+        </div>
+        <div class="frame-footer">
+          <div class="stage-caption"><span class="caption-no">01</span><span><b>THE LAST TRAIN</b><small>SHINJUKU LINE · 01:47 AM</small></span></div>
+          <div class="footer-center"><span class="footer-dot"></span> BUILT FOR THE RUNBACK</div>
+          <button class="controls-toggle" id="controls-toggle" type="button">CONTROLS <span>+</span></button>
+        </div>
+        <div class="controls-drawer" id="controls-drawer" hidden>
+          <div><b>P1 · JUNO</b><span><kbd>A</kbd><kbd>D</kbd> Move</span><span><kbd>W</kbd> Jump <kbd>S</kbd> Crouch</span><span><kbd>F</kbd> Light <kbd>G</kbd> Heavy <kbd>H</kbd> Guard</span></div>
+          <div><b>P2 · ROOK</b><span><kbd>←</kbd><kbd>→</kbd> Move</span><span><kbd>↑</kbd> Jump <kbd>↓</kbd> Crouch</span><span><kbd>J</kbd> Light <kbd>K</kbd> Heavy <kbd>L</kbd> Guard</span></div>
+          <p>First to two rounds. Block the heavy, punish the recovery. Local duel is shared-keyboard; online rooms need the game server running.</p>
+        </div>
+      </section>
+
+      <section class="below-row">
+        <div class="quote-mark">“</div>
+        <p>NO LADDERS TO CLIMB.<br><span>JUST SOMEONE TO BEAT.</span></p>
+        <div class="below-meta"><span>01 / 03 ROUNDS</span><span>·</span><span>BEST OF THREE</span></div>
+        <div class="next-match">NEXT MATCH <span>YOURS <b>↗</b></span></div>
+      </section>
+      <footer class="page-footer"><span>LAST LIGHT FIGHT CLUB © 2026</span><span>AN INDEPENDENT FIGHTING GAME</span><span>MADE FOR THE AFTER HOURS</span></footer>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
